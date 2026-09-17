@@ -1,64 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI content genrator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="index.css">
+  <title>Gemini Quiz Helper</title>
+
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🚀 AI Content Generator</h1>
 
-        <div class="output" id="answeroutput"></div>
+  <div class="container">
 
-    </div>
+    <h1>🧠 Gemini Quiz Helper</h1>
 
-    <div class="card">
-        <h1>Quick Summarizer</h1>
+    <input
+      type="text"
+      id="topicInput"
+      placeholder="Enter topic..."
+    />
 
-        <textarea id="summaryInput" placeholder="Paste your text here...."></textarea>
-        <button id="summaryBtn">Summarize</button>
-        <div class="output" id="summaryOutput"></div>
+    <button id="generateBtn">
+      Generate Quiz
+    </button>
 
+    <div class="quiz-box">
 
-    </div>
+      <h2>Question:</h2>
 
-    <div>
+      <p id="question">
+        Your question will appear here...
+      </p>
 
-        <div class="card"></div>
+      <h2>Answer:</h2>
 
-        <h1>Idea Generator</h1>
-
-        <input type="text" id="ideaInput" placeholder="Enter topic">
-
-        <button id="ideaBtn">Generate Ideas</button>
-
-        <div class="output" id="ideaOutput"></div>
-
-
-
+      <p id="answer">
+        Your answer will appear here...
+      </p>
 
     </div>
 
-    <div class="card">
-        <h1>Definition Finder</h1>
+  </div>
 
-        <input type="text" id="defineInput" placeholder="Enter any term">
+  <script src="index.js"></script>
 
-        <button id="defineBtn">Find Definition</button>
-
-        <p id="defineOutput"></p>
-
-        <div class="output" id="definition"></div>
-
-
-
-
-    </div>
-
-    <script src="script.js"></script>
-    
 </body>
 </html>

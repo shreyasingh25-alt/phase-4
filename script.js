@@ -1,27 +1,34 @@
-const API_KEY = "AIzaSyCtkfjE-K_dOGwKFUcNqCROnSx3A1JwD1A";
+const API_KEY = "AIzaSyDHW7E14Vi31Ap2NOmIxxie-STJvXFY8gk";
+
+const affirmation =
+  document.getElementById("affirmation");
+
+const newBtn =
+  document.getElementById("newBtn");
+
+let lastAffirmation = "";
 
 
 
-const questionInput = document.getElementById("questionInput");
-const askBtn = document.getElementById("askBtn");
-const answerOutput = document.getElementById("answerOutput");
+const fetchAffirmation = async () => {
 
-const summaryInput = document.getElementById("summaryInput");
-const summaryBtn = document.getElementById("summaryBtn");
-const summaryOutput = document.getElementById("summaryOutput");
-
-const ideaInput = document.getElementById("ideaInput");
-const ideaBtn = document.getElementById("ideaBtn");
-const ideaOutput = document.getElementById("ideaOutput");
-
-const defineInput = document.getElementById("defineInput");
-const defineBtn = document.getElementById("defineBtn");
-const defineOutput = document.getElementById("defineOutput");
+  affirmation.innerText =
+    "Loading affirmation... 🌟";
 
 
 
+  const randomNumber =
+    Math.floor(Math.random() * 100000);
 
-const getAIResponse = async (prompt) => {
+
+
+  const prompt =
+    `Give me one completely different short positive affirmation.
+    
+    Make it unique and motivational.
+    
+    Random: ${randomNumber}
+    `;
 
   try {
 
@@ -31,7 +38,7 @@ const getAIResponse = async (prompt) => {
         method: "POST",
 
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
 
         body: JSON.stringify({
@@ -39,75 +46,68 @@ const getAIResponse = async (prompt) => {
             {
               parts: [
                 {
-                  text: `Summarize the following text:\n${prompt}`
-                }
-              ]
-            }
-          ]
-        })
+                  text: prompt,
+                },
+              ],
+            },
+          ],
+        }),
       }
     );
+
+
 
     const data = await response.json();
 
     console.log(data);
 
-    if(data.candidates){
 
-      return data.candidates[0].content.parts[0].text;
+
+    let result =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+
+
+    result = result.trim();
+
+
+
+    
+    if (result === lastAffirmation) {
+
+      fetchAffirmation();
+
+      return;
 
     }
 
-    else{
 
-      return "No response from AI";
 
-    }
+    lastAffirmation = result;
 
-  }
+    affirmation.innerText = result;
 
-  catch(error){
+  } catch (error) {
 
     console.log(error);
 
-    return "Something went wrong";
+    affirmation.innerText =
+      "Failed to load affirmation 😢";
 
   }
 
 };
 
-summaryBtn.addEventListener("click", async () => {
-
-  const text = summaryInput.value;
-
-  const result = await getAIResponse(text);
-
-  summaryOutput.innerText = result;
-
-});
-
-ideaBtn.addEventListener("click", async () => {
-
-  const topic = ideaInput.value;
-
-  const result = await getAIResponse(
-    `Give ideas about: ${topic}`
-  );
-
-  ideaOutput.innerText = result;
-
-});
-
-defineBtn.addEventListener("click", async () => {
-
-  const word = defineInput.value;
-
-  const result = await getAIResponse(
-    `Define this word: ${word}`
-  );
-
-  defineOutput.innerText = result;
-
-});
 
 
+document.addEventListener(
+  "DOMContentLoaded",
+  fetchAffirmation
+);
+
+
+
+newBtn.addEventListener(
+  "click",
+  fetchAffirmation
+);
